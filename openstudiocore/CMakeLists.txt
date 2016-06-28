@@ -973,6 +973,7 @@ set(all_lib_targets
 
 export(TARGETS
   ${all_lib_targets}
+  embedded_ruby_extensions_stub
   FILE "${TARGETS_FILE}"
 )
 

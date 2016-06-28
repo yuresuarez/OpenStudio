@@ -9,3 +9,7 @@ add_executable(CreateEmbeddedSource
 
 target_link_libraries(CreateEmbeddedSource miniziplib)
 
+add_library(embedded_ruby_extensions_stub STATIC
+  embedded_extensions_stub.cpp
+)
+
