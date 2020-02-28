@@ -593,6 +593,32 @@ TEST_F(EnergyPlusFixture,ForwardTranslatorTest_AllObjects) {
 }
 */
 
+TEST_F(EnergyPlusFixture, ForwardTranslatorTest_MultipleTranslatorsInScope) {
+  Model model;
+  Space space(model); // not in thermal zone will generate a warning
+
+  // run in current thread
+  size_t numWarnings = [&](){
+    ForwardTranslator translator;
+    boost::optional<Workspace> workspace = translator.translateModel(model);
+    return translator.warnings().size();
+  }();
+
+  ASSERT_NE(0, numWarnings);
+
+  ForwardTranslator translator; // not used
+  ForwardTranslator translator2; // used
+
+  boost::optional<Workspace> workspace = translator.translateModel(model);
+  ASSERT_TRUE(workspace);
+
+  // unused translator should not share state
+  EXPECT_EQ(0, translator.warnings().size());
+
+  // translator2 should have > 0 warnings to match the base test
+  EXPECT_EQ(numWarnings, translator2.warnings().size());
+}
+
 TEST_F(EnergyPlusFixture, ForwardTranslatorTest_MultiThreadedLogMessages) {
 
   // This thread calls forward translator, this is not a good example of threading
