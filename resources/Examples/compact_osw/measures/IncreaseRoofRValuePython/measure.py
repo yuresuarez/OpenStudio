@@ -1,7 +1,7 @@
 import openstudio
 import typing
 
-class IncreaseInsulationRValueForRoofsByPercentagePython(openstudio.measure.ModelMeasure):
+class IncreaseInsulationRValueForRoofsByPercentagePython(openstudio.measure.PythonModelMeasure):
 
     def name(self):
         """

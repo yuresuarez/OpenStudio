@@ -64,6 +64,13 @@
 %feature("director") ReportingMeasure;
 %feature("director") OSRunner;
 
+#if defined(SWIGPYTHON)
+// When SWIG'ing to Python, rename "Measure" to "PythonMeasure" so that we don't have SwigDirector_Measure name clashing
+%rename (PythonModelMeasure) ModelMeasure;
+%rename (PythonEnergyPlusMeasure) EnergyPlusMeasure;
+%rename (PythonReportingMeasure) ReportingMeasure;
+#endif
+
 %include <measure/OSArgument.hpp>
 %include <measure/OSOutput.hpp>
 %include <measure/OSRunner.hpp>
